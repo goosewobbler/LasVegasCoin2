@@ -1,18 +1,18 @@
 # VPS Masternode Setup Guide
 
-The following sets up a single node called *lasvegascoin_node1* over IPV4.  It assumes you know how to send yourself funds with a wallet, and can use the linux editor vim.
+The following sets up a single node called *lasvegascoin_node1* over IPV4.  It assumes you know how to send coins with a wallet, log into a remote server with SSH, create and edit text files on Linux.
 
-## *__on master wallet__*
+## __Generate Node Configuration *(on master wallet)*__  
 
 #### *< Tools menu => **Debug Console** >*  
 
-Enter the following commands:
+Enter the following commands into the debug console:
 
 ```
 getnewaddress lasvegascoin_node1
 ```
 
-This will result in a LasVegasCoin address.  Send exactly 1000 VGS to this address in a single transaction.
+This will result in a new LasVegasCoin address.  Send exactly 1000 VGS to this address in a single transaction.  Funds can be sent to yourself - from the intended recipient wallet.
 
 
 ```
@@ -27,17 +27,19 @@ masternode outputs
 
 The result of this is your MN transaction id and index in the format _"{tx_id}": "{index}"_.  You need those later.  If the result is _{ }_, you have no valid transactions - check that exactly 1000 VGS has been sent to your wallet address.
 
+## __Store Node Configuration *(on master wallet)*__ 
+
 #### *< Tools menu => **Open Masternode Configuration File** >*
 
-Add the following details in this file in the following format:
+Add the following details in this file - *masternode.conf* - in the following format:
 
 ```
 lasvegascoin_node1 {VPS IP address}:60702 {MN private key} {MN transaction id} {MN transaction index}
 ```
 
-Save the file and close the wallet.  Open the wallet again.
+Save the file and close the wallet.
 
-## *__on VPS__*  
+## __Set Up Node *(on VPS)*__  
 
 Run the following commands to compile and install the VPS wallet:
 
@@ -70,14 +72,19 @@ The value of 'blocks' will increase until it reaches the 'up to block' value on 
 
 https://chainz.cryptoid.info/vgs/#
 
-When the VPS wallet is fully synced, you can start the node remotely:
 
-## *__on master wallet__*
+
+## __Activate Node Remotely *(on master wallet)*__
+
+Once the VPS wallet is fully synced, you can start the node remotely.  Open the master wallet again, click on the Masternodes tab and click *Start MISSING*.
+
 #### *< Masternodes tab => My Masternodes => Start MISSING >*
 
-You can verify the status of the VPS wallet and masternode with the following:
 
-## *__on VPS__*  
+
+## __Verify Node Status *(on VPS)*__
+
+You can verify the status of the VPS masternode with the following command.  This, along with getinfo
 
 ```
 /usr/local/bin/lasvegascoin-cli -conf=/etc/masternodes/lasvegascoin_n1.conf masternode status
@@ -87,6 +94,14 @@ You can verify the status of the VPS wallet and masternode with the following:
 
 ## Disclaimer
 
-This has been tested with Vultr Ubuntu 16.04 instance ($5/month).  The $2.50 instances should be fine for a single node, if sold out use $5.
+This has been tested with Vultr Ubuntu 16.04 instance ($5/month).  The $2.50 instances (1 CPU / 512MB Memory / 500GB Bandwidth) should be fine for a single node - if sold out, use the $5 instance.  Similarly specified VPS instances from other providers will also work fine.
+
+The script found at https://github.com/goosewobbler/vps is the Nodemaster script by [@Marsmench](https://twitter.com/Marsmensch), forked for LasVegasCoin integration. 
+
+Nodemaster original/upstream repo:  
+https://github.com/masternodes/vps
+
+Nodemaster VPS guide:  
+https://masternodes.github.io/vps/docs/masternode_vps.html
 
 You can sign up for Vultr [here](https://www.vultr.com/?ref=7282546).
