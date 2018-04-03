@@ -84,7 +84,7 @@ Once the VPS wallet is fully synced, you can start the node remotely.  Open the 
 
 ## __Verify Node Status *(on VPS)*__
 
-You can verify the status of the VPS masternode with the following command.  This, along with getinfo
+You can verify the status of the VPS masternode with the following command. 
 
 ```
 /usr/local/bin/lasvegascoin-cli -conf=/etc/masternodes/lasvegascoin_n1.conf masternode status
